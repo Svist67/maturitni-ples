@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maturitní ples 4.AB | Gymnázium Jilemnice</title>
+    <style>
+        :root {
+            --greek-blue: #005b9f;
+            --greek-white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-image: #eef2f5;
+            scroll-behavior: smooth; /* Plynulý posun po stránce při kliknutí v menu */
+        }
+
+        /* OBÁLKA S GEOMETRICKÝMI LINKAMI PO STRANÁCH */
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--greek-white);
+            border-left: 12px double var(--greek-blue);
+            border-right: 12px double var(--greek-blue);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* HLAVIČKA A NAVIGACE */
+        header {
+            background-color: var(--greek-blue);
+            color: var(--greek-white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #003f70;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: var(--greek-white);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #cce0ff; 
+            text-decoration: underline;
+        }
+
+        /* HLAVNÍ BANNER - HERO */
+        .hero {
+            background-color: var(--greek-blue);
+            color: var(--greek-white);
+            text-align: center;
+            padding: 80px 20px;
+            border-bottom: 8px solid #003f70;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 15px,
+                rgba(255, 255, 255, 0.05) 15px,
+                rgba(255, 255, 255, 0.05) 30px
+            );
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--greek-white);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .hero p.subtitle {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+
+        .event-details {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--greek-white);
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+        }
+
+        /* SPOLEČNÉ STYLY PRO SEKCE */
+        main {
+            flex: 1;
+        }
+
+        section {
+            padding: 60px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--greek-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        section h2::before, section h2::after {
+            content: "";
+            height: 2px;
+            width: 50px;
+            background-color: var(--greek-blue);
+            display: inline-block;
+        }
+
+        /* PROGRAM LIST */
+        ul.program-list {
+            list-style: none;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        ul.program-list li {
+            padding: 18px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        ul.program-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .time {
+            font-weight: bold;
+            color: var(--greek-blue);
+            font-size: 1.15rem;
+            min-width: 80px;
+        }
+
+        /* MATURANTI */
+        .class-intro {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 35px auto;
+            font-size: 1.1rem;
+        }
+        
+        .teacher-box {
+            text-align: center;
+            background: #f4f8fc;
+            border: 2px solid var(--greek-blue);
+            padding: 20px;
+            max-width: 450px;
+            margin: 0 auto 40px auto;
+        }
+        
+        .teacher-box h3 {
+            color: var(--greek-blue);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .group-title {
+            text-align: center;
+            color: var(--greek-blue);
+            font-size: 1.3rem;
+            margin: 30px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #cce0ff;
+            padding-bottom: 8px;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .student-card {
+            padding: 12px;
+            border: 1px solid #cce0ff;
+            border-left: 4px solid var(--greek-blue);
+            background: #fafcfe;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* LÍSTKY */
+        .tickets-container {
+            background: #f4f8fc;
+            padding: 40px;
+            border: 2px solid var(--greek-blue);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .tickets-container::before, .tickets-container::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--greek-blue);
+        }
+        .tickets-container::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .tickets-container::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+        .tickets-container h3 {
+            color: var(--greek-blue);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin: 15px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--greek-blue);
+            color: var(--greek-white);
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background-color: var(--greek-white);
+            color: var(--greek-blue);
+            box-shadow: 0 0 0 2px var(--greek-blue) inset;
+        }
+
+        /* KONTAKT */
+        .contact-box {
+            background: #f4f8fc;
+            border: 2px solid var(--greek-blue);
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .contact-box p { 
+            margin: 10px 0; 
+            font-size: 1.1rem; 
+        }
+
+        /* PATIČKA */
+        footer {
+            background: var(--greek-blue);
+            color: var(--greek-white);
+            text-align: center;
+            padding: 25px 0;
+            border-top: 4px solid #003f70;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- NAVIGACE -->
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#uvod">O plesu</a></li>
+                    <li><a href="#program">Program</a></li>
+                    <li><a href="#maturanti">Maturanti</a></li>
+                    <li><a href="#listky">Vstupenky</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- HLAVNÍ BANNER -->
+        <div class="hero">
+            <h1>Maturitní Ples 4.AB</h1>
+            <p class="subtitle">Gymnázium Jilemnice vás zve na večer v duchu antického Řecka!</p>
+            <div class="event-details">
+                <strong>Kdy:</strong> 9. dubna 2027<br>
+                <strong>Kde:</strong> KD Střelnice, Vrchlabí
+            </div>
+        </div>
+
+        <main>
+            <!-- SEKCE O PLESU -->
+            <section id="uvod">
+                <h2>O plesu</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.1rem;">
+                    Zveme vás na velkolepé zakončení našeho studia na jilemnickém gymnáziu. Naše půlená třída <strong>4.AB</strong> v sobě spojuje studenty <strong>čtyřletého gymnázia</strong> a <strong>gymnázia se sportovní přípravou</strong> – zkrátka pravé antické propojení vědění a olympijského sportovního ducha. Olympské brány se otevřou pro všechny rodiče, přátele i kantory, abychom společně oslavili náš vstup do dospělosti a blížící se maturitu.
+                </p>
+            </section>
+
+            <!-- SEKCE PROGRAM -->
+            <section id="program">
+                <h2>Program večera</h2>
+                <ul class="program-list">
+                    <li><span class="time">19:00</span> <span>Otevření sálu (Olympské brány se otevírají)</span></li>
+                    <li><span class="time">20:00</span> <span>Slavnostní zahájení a předtančení</span></li>
+                    <li><span class="time">21:00</span> <span>Šerpování maturantů</span></li>
+                    <li><span class="time">22:30</span> <span>Volná zábava, tombola a focení</span></li>
+                    <li><span class="time">00:00</span> <span>Půlnoční překvapení (Speciální vystoupení ve stylu Magic Mike – v hlavní roli Tomáš Zajíc)</span></li>
+                </ul>
+            </section>
+
+            <!-- SEKCE MATURANTI -->
+            <section id="maturanti">
+                <h2>Třída 4.AB</h2>
+                <p class="class-intro">
+                    Jsme půlená třída <strong>Gymnázia v Jilemnici</strong>, kterou tvoří studenti čtyřletého všeobecného gymnázia a gymnázia se sportovní přípravou.
+                </p>
+                
+                <div class="teacher-box">
+                    <h3>Třídní učitel/ka</h3>
+                    <p>[Jméno třídního učitele / učitelky]</p>
+                </div>
+
+                <!-- 1. ČÁST TŘÍDY: ČTYŘLETÉ GYMNÁZIUM -->
+                <h3 class="group-title">Čtyřleté gymnázium</h3>
+                <div class="students-grid">
+                    <div class="student-card">Tomáš Zajíc</div>
+                    <div class="student-card">[Jméno spolužáka 2]</div>
+                    <div class="student-card">[Jméno spolužáka 3]</div>
+                    <div class="student-card">[Jméno spolužáka 4]</div>
+                    <div class="student-card">[Jméno spolužáka 5]</div>
+                    <div class="student-card">[Jméno spolužáka 6]</div>
+                </div>
+
+                <!-- 2. ČÁST TŘÍDY: SPORTOVNÍ PŘÍPRAVA -->
+                <h3 class="group-title">Gymnázium se sportovní přípravou</h3>
+                <div class="students-grid">
+                    <div class="student-card">[Jméno sportovce 1]</div>
+                    <div class="student-card">[Jméno sportovce 2]</div>
+                    <div class="student-card">[Jméno sportovce 3]</div>
+                    <div class="student-card">[Jméno sportovce 4]</div>
+                    <div class="student-card">[Jméno sportovce 5]</div>
+                    <div class="student-card">[Jméno sportovce 6]</div>
+                </div>
+            </section>
+
+            <!-- SEKCE VSTUPENKY -->
+            <section id="listky">
+                <h2>Vstupenky</h2>
+                <div class="tickets-container">
+                    <h3>Zajistěte si své místo na Olympu!</h3>
+                    <div class="price">500 Kč</div>
+                    <p>Prodej probíhá online. Po zaplacení přes QR kód vám e-vstupenky dorazí automaticky na e-mail.</p>
+                    
+                    <a href="#" class="btn">Koupit vstupenky online</a>
+                </div>
+            </section>
+
+            <!-- SEKCE KONTAKT -->
+            <section id="kontakt">
+                <h2>Kontakt a místo</h2>
+                <div class="contact-box">
+                    <p><strong>Místo konání:</strong> KD Střelnice, Vrchlabí</p>
+                    <p><strong>Datum:</strong> 9. dubna 2027 od 19:00</p>
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #cce0ff;">
+                    <p><strong>E-mail:</strong> maturanti4ab@gymnaziumjilemnice.cz</p>
+                    <p><strong>Instagram:</strong> @maturantigymnaziumjilemnice</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- PATIČKA -->
+        <footer>
+            <p>&copy; 2027 Maturanti 4.AB – Gymnázium Jilemnice. Vytvořeno pro božský večer.</p>
+        </footer>
+    </div>
+</body>
+</html>
